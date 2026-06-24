@@ -37,6 +37,16 @@ If no status is provided:
 - ✅ DONE → remains DONE
 ---
 
+##  Database Flow
+The application uses a tasks table mapped via the Task JPA entity.
+
+- Primary Key: UUID (id)
+- Fields: title, description, status, priority
+- Auditing: Automatically tracks createdAt and updatedAt
+- Optimistic Locking: Managed using a version field
+- Indexes: Added on status and priority for faster filtering
+The design ensures efficient querying, data consistency, and support for concurrent updates
+---
 ## 🔌 API Endpoints
 
 ### ➕ Create Task
