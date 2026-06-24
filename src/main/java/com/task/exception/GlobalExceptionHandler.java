@@ -1,5 +1,6 @@
 package com.task.exception;
 
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -19,6 +20,17 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now(),
                 HttpStatus.NOT_FOUND.value(),
                 "Task Not Found",
+                ex.getMessage(),
+                extractPath(request)
+        ));
+    }
+
+    @ExceptionHandler(TaskStatusNotValid.class)
+    public ResponseEntity<ErrorResponse> handleTaskStatusNotValid(TaskStatusNotValid ex, WebRequest request) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "Task status is Not Valid. Task status can not be change from OPEN to DONE",
                 ex.getMessage(),
                 extractPath(request)
         ));
@@ -63,6 +75,24 @@ public class GlobalExceptionHandler {
                 extractPath(request)
         ));
     }
+
+
+
+    @ExceptionHandler(OptimisticLockingFailureException.class)
+    public ResponseEntity<ErrorResponse> handleOptimisticLock(
+            OptimisticLockingFailureException ex, WebRequest request) {
+
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new ErrorResponse(
+                        LocalDateTime.now(),
+                        HttpStatus.CONFLICT.value(),
+                        "Conflict",
+                        "Task was updated by another user. Please retry.",
+                        extractPath(request)
+                ));
+    }
+
+
 
     private String extractPath(WebRequest request) {
         return request.getDescription(false)

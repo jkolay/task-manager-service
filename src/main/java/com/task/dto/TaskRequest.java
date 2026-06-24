@@ -21,7 +21,6 @@ public class TaskRequest {
     @Schema(description = "Optional task description", example = "Support OAuth2 and basic auth flows")
     private String description;
 
-    @NotNull(message = "Status is required")
     @Schema(description = "Task status", example = "OPEN")
     private TaskStatus status;
 

@@ -51,6 +51,11 @@ public class Task {
     @Column(nullable = false)
     private Instant updatedAt;
 
+    @Version
+    @Column(nullable = false)
+    private Long version;
+
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = Instant.now();
