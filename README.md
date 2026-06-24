@@ -94,18 +94,52 @@ curl -X 'GET' \
 ```bash
 git clone https://github.com/jkolay/task-manager-service.git
 cd task-manager-service
-./mvnw spring-boot:run
+
+## Build & Run Commands
+
+
+# Build and run tests
+mvn clean test
+
+# Run with dev profile (no real IdP needed)
+mvn spring-boot:run -Dspring-boot.run.profiles=dev
+
+# Generate test coverage report
+mvn clean test jacoco:report
+# Report at: target/site/jacoco/index.html
+
+# Package as JAR
+mvn clean package -DskipTests
+java -jar target/task-manager-service-1.0.0.jar --spring.profiles.active=dev
 ```
 
+
+
 ---
+### ✅ Run Container (DEV profile)
+
+```bash
+docker run -p 8085:8085 \
+           -p 8084:8084 \
+           -e SPRING_PROFILES_ACTIVE=dev \
+           task-manager-service
+```
+---
+### ✅ Swagger
+
+Please access the swagger ui at
+```bash
+http://127.0.0.1:8085/swagger-ui/index.html
+```
+Authenticate with value
+```bash
+client-a-token
+
+```
 
 ## 👤 Author
 
 Jayati Kolay  
 GitHub: https://github.com/jkolay
 
----
 
-## 📄 License
-
-MIT License
