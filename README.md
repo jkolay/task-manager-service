@@ -36,6 +36,16 @@ If no status is provided:
 - ✅ IN_PROGRESS → DONE
 - ✅ DONE → remains DONE
 ---
+## Mapping to packages
+
+- Controller: src/main/java/com/task/controller/TaskController.java
+- Service: src/main/java/com/task/service/TaskService.java
+- Mapper: src/main/java/com/task/mapper/TaskMapper.java
+- Repository: src/main/java/com/task/repository/
+- Entities & DTOs: src/main/java/com/task/entity and src/main/java/com/task/dto
+- Config: src/main/java/com/task/config
+- Exception handling: src/main/java/com/task/exception
+---
 
 ##  Database Flow
 The application uses a tasks table mapped via the Task JPA entity.
