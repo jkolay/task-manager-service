@@ -11,7 +11,7 @@ COPY target/*.jar app.jar
 EXPOSE 8085
 EXPOSE 8084
 
-ENV SPRING_PROFILES_ACTIVE=dev
+ENV SPRING_PROFILES_ACTIVE=docker
 
 # Run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]

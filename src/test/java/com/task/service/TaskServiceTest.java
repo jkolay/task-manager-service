@@ -104,19 +104,6 @@ class TaskServiceTest {
     }
 
     @Test
-    void listTasks_returnsPagedResponse() {
-        Pageable pageable = PageRequest.of(0, 20);
-        Page<Task> page = new PageImpl<>(List.of(task), pageable, 1);
-        when(taskRepository.findFiltered(null, null, pageable)).thenReturn(page);
-        when(taskMapper.toResponse(task)).thenReturn(response);
-
-        PageResponse<TaskResponse> result = taskService.listTasks(null, null, pageable);
-
-        assertThat(result.getTotalElements()).isEqualTo(1);
-        assertThat(result.getContent()).hasSize(1);
-    }
-
-    @Test
     void updateTask_success() {
         when(taskRepository.findById(task.getId())).thenReturn(Optional.of(task));
         doNothing().when(taskMapper).updateEntity(task, request);

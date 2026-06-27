@@ -65,7 +65,7 @@ public class SecurityConfig {
      * Extracts client_id from JWT claims for multi-tenant isolation.
      */
     @Bean
-    @Profile("!dev")
+    @Profile({"prod"})
     SecurityFilterChain oauth2SecurityFilterChain(HttpSecurity http) throws Exception {
         applyCommon(http);
         http.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> {
@@ -81,7 +81,7 @@ public class SecurityConfig {
      * Supports multi-tenant testing without a real IdP.
      */
     @Bean
-    @Profile("dev")
+    @Profile({"dev","docker"})
     SecurityFilterChain devSecurityFilterChain(HttpSecurity http) throws Exception {
         applyCommon(http);
         http.addFilterBefore(

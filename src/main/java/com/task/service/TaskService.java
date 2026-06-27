@@ -12,10 +12,12 @@ import com.task.exception.TaskNotFoundException;
 import com.task.exception.TaskStatusNotValid;
 import com.task.mapper.TaskMapper;
 import com.task.repository.TaskRepository;
+import com.task.specification.TaskSpecification;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +31,7 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
+    private final TaskSpecification taskSpecification;
 
     @Transactional
     public TaskResponse createTask(TaskRequest request) {
@@ -54,7 +57,10 @@ public class TaskService {
     public PageResponse<TaskResponse> listTasks(TaskStatus status, TaskPriority priority, Pageable pageable) {
         log.info("Listing tasks - status: {}, priority: {}, page: {}, size: {}",
                 status, priority, pageable.getPageNumber(), pageable.getPageSize());
-        Page<Task> page = taskRepository.findFiltered(status, priority, pageable);
+        Specification<Task> spec = TaskSpecification.filterByStatusAndPriority(status, priority);
+        Page<Task> page = taskRepository.findAll(spec, pageable);
+       // Page<Task> page = taskRepository.findFiltered(status, priority, pageable);
+
         return toPageResponse(page);
     }
 
