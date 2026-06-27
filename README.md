@@ -22,7 +22,7 @@ This service allows users to create, update, and manage tasks with status tracki
 - **Spring Boot**
 - **Spring Data JPA**
 - **Maven**
-- **MapStruct**
+
 
 ---
 
